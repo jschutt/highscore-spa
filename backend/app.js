@@ -5,12 +5,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var expressLayouts = require("express-ejs-layouts");
 const { Pool } = require("pg");
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var searchRouter = require('./routes/search');
 var gamesRouter = require('./routes/games');
 var gamesAdminRouter = require('./routes/admin/games');
 var scoreAdminRouter = require('./routes/admin/score');
+
+//API
+var gamesApiRouter = require('./routes/api/games')
 
 var app = express();
 
@@ -28,6 +32,7 @@ app.set('view engine', 'ejs');
 app.set('layout', 'shared/layout');
 
 app.use(expressLayouts);
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -39,6 +44,9 @@ app.use('/search', searchRouter);
 app.use('/games', gamesRouter);
 app.use('/admin/games', gamesAdminRouter);
 app.use('/admin/score', scoreAdminRouter);
+
+// API
+app.use('/api/games', gamesApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
