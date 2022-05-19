@@ -1,0 +1,29 @@
+<div class="user-card-list mb-2">
+  <a href="/games/<%= user.url_slug %>">
+    <% if(user.highscore == null) { %>
+    <div class="user-card arrow-hover">
+      <p class="fw-bolder fs-5"><%= user.title %></p>
+      <p class="fw-bolder fs-5">0</p>
+      <div class="break"></div>
+      <p>No scores yet registered</p>
+    </div>
+    <img
+    class="arrow"
+    src="https://i.imgur.com/0vKgaDf.png"
+    alt="arrow"
+  />
+    <% } else { %>
+    <div class="user-card">
+      <p class="fw-bolder fs-5"><%= user.title %></p>
+      <p class="fw-bolder fs-5"><%= user.highscore %></p>
+      <div class="break"></div>
+      <p><%= user.player %>, <%= user.highscore_date %></p>
+    </div>
+    <img
+    class="arrow"
+    src="https://i.imgur.com/0vKgaDf.png"
+    alt="arrow"
+  />
+    <% } %>
+  </a>
+</div>

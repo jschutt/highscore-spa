@@ -1,0 +1,29 @@
+<section class="game-details row mt-4">
+  <img
+    src="<%= game.image_url%>"
+    class="d-block col-4"
+    alt="Picture of <%= game.title %>"
+  />
+  <div class="col-8">
+    <h1 class="mb-3"><%= game.title %></h1>
+    <div class="mb-3"><%= game.release_date %>, <%= game.genre %></div>
+    <div class="mb-3"><%= game.description%></div>
+  </div>
+  <div class="score-list-container mt-4 pb-3">
+    <h2 class="text-center my-3">Top 10 highscores</h2>
+    <div class="score-list">
+      <% if(users[0].highscore !== null) { %> 
+        <% let rank = 0 %>
+        <% users.forEach(user=> { %>
+          <% rank += 1; %>
+      <div class="game-scores mb-3 px-3 py-3 d-flex justify-content-between">
+        <p><strong><%= rank %>.</strong> <%= user.player%>, <%= user.highscore_date%></p>
+        <p><%= user.highscore%></p>
+      </div>
+      <% }) %> 
+      <% } else { %>
+      <p class="text-center">No scores yet registered</p>
+      <% } %>
+    </div>
+  </div>
+</section>

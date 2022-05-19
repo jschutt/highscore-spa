@@ -1,0 +1,10 @@
+<section class="home-section px-4 pb-3">
+  <h1 class="text-center mb-4 pt-4">Top scores</h1>
+  <div class="highscore-list mb-5">
+
+    <% users.forEach(user => { %>
+      <%- include("shared/partials/user-card.ejs", {user}) %>
+    <% }) %>
+
+  </div>
+</section>

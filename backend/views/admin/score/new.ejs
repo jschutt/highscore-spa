@@ -1,0 +1,43 @@
+<h1>New highscore</h1>
+<form method="post">
+  <label for="gameTitle">Select game</label>
+  <select name="gameTitle" id="gameTitle">
+    <% games.forEach(game => { %>
+      <option value="<%= game.title %>"><%= game.title %></option>
+    <% }) %>
+</select>
+    <div class="row mb-3">
+      <div class="col">
+        <input
+          type="text"
+          name="player"
+          class="form-control"
+          placeholder="Player name"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <label for="highscoreDate">Highscore date</label>
+        <input
+          type="text"
+          name="highscoreDate"
+          id="highscoreDate"
+          class="form-control"
+          placeholder="YYYY-MM-DD"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <input
+          type="number"
+          name="highscore"
+          class="form-control"
+          placeholder="Highscore"
+        />
+      </div>
+    </div>
+    <button class="add-game-btn">Add score</button>
+  </form>
+  

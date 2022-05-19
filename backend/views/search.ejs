@@ -1,0 +1,8 @@
+<section class="search-results mb-4">
+    <div class="text-center fs-5 my-4">Found <%= games.length %> matches on "<%= searchTerm %>"</div>
+    <div class="row">
+        <% games.forEach(game => { %>
+            <%- include("shared/partials/search-card", {game}) %>
+        <% }) %>
+    </div>
+</section>
