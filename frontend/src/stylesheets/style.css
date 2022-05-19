@@ -1,0 +1,243 @@
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-family: monospace;
+    color: #465a79;
+    background-color: #f7fbff;
+  }
+  
+  a {
+    color: #465a79;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #465a79;
+    text-decoration: none;
+  }
+  
+  .navbar {
+    background-color: #daeaf7;
+  }
+  
+  .home-section {
+    width: 815px;
+    margin: auto;
+  }
+  
+  .highscore-list {
+    /* background: lightblue; */
+  }
+  
+  .form-control {
+    border: 1px solid #465a79;
+  }
+  
+  .user-card-list {
+    /* background-color: #f8f9fa;
+    border: 2px solid #464646;
+    border-radius: 6px; */
+    height: 74px;
+    /* transform: translateX(0px); */
+    background: url('https://i.imgur.com/JjCnFsK.png') no-repeat;
+    background-color: white;
+  }
+  
+  .user-card-list:hover {
+    /* transform: translateX(8px); */
+    opacity: 0.8;
+  }
+  
+  .user-card-list a {
+    color: #465a79;
+    text-decoration: none;
+  }
+  
+  .user-card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px;
+  }
+  
+  .user-card p {
+    margin: 0;
+  }
+  
+  .arrow {
+    opacity: 0;
+    position:relative;
+    bottom: 50%;
+    left: -4%;
+    transform:translate(-50%, -50%);
+  }
+  
+  .user-card:hover + .arrow{
+    opacity: 1;
+  }
+  
+  .break {
+    flex-basis: 100%;
+    height: 0;
+  }
+  
+  
+  .image-title {
+    transform: translateY(0px);
+    transition-duration: 0.3s;
+  }
+  
+  .image-title:hover {
+    transform: translateY(-8px);
+    transition-duration: 0.3s;
+  }
+  
+  .search-btn {
+    background-color: white;
+    width: 98px;
+    border: none;
+    background: url('https://i.imgur.com/RIxh50K.png') no-repeat;
+    background-size: 72px;
+  }
+  
+  .search-btn:hover {
+    opacity: 0.9;
+  }
+  
+  .search-btn:active {
+    background: url('https://i.imgur.com/0PuXs2w.png') no-repeat;
+  }
+  
+  .game-details {
+    color: #484a77;
+  }
+  
+  .game-details img {
+    padding-left: 30px;
+  }
+  
+  .score-list {
+    width: 80%;
+    margin: auto;
+  }
+  
+  .game-scores {
+    border: 1px solid #484a77;
+    border-radius: 5px;
+    background-color: white;
+  }
+  
+  .game-scores p {
+    font-size: 1.2em;
+    margin: 0;
+  }
+  
+  .score-list-container {
+    background-color: #edf6ff;
+  }
+  
+  .search-card {
+    width: 815px;
+    margin: auto;
+    display: grid;
+    grid-template-areas: 
+    "title image"
+    "genre image";
+    background: url('https://i.imgur.com/4x3uZ5x.png') no-repeat;
+    background-color: white;
+    height: 140px;
+  }
+  
+  .search-card:hover {
+    opacity: 0.8;
+  }
+  
+  .search-title {
+    grid-area: title;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 20px;
+  }
+  
+  .search-genre {
+    grid-area: genre;
+    font-size: 16px;
+    padding-bottom: 20px;
+  }
+  
+  .search-image {
+    grid-area: image;
+  }
+  
+  .search-results {
+    width: 80%;
+    margin: auto;
+  }
+  
+  .search-card {
+    margin-bottom: 15px;
+  }
+  
+  .search-card p {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-left: 20px;
+  }
+  
+  .search-card img {
+    width: 25%;
+    margin: 10px 10px 10px auto;
+  }
+  
+  .footer {
+    background-color: #daeaf7;
+  }
+  
+  .game-list-container {
+    width: 815px;
+    margin: 8px auto 40px auto;
+  }
+  
+  .game-list {
+    border: 1px solid black;
+  
+  }
+  
+  .admin-btn-container {
+    display: flex;
+    justify-content: start;
+  }
+  
+  .admin-btn-container a {
+    margin: 10px 0px 10px 0px;
+    margin-left: 8px;
+  }
+  
+  .admin-btn-container h1 {
+    padding-top: 10px;
+    margin: 0;
+    margin-right: auto;
+  }
+  
+  .add-game-btn {
+    background: url('https://i.imgur.com/D8yakhu.png') no-repeat;
+    background-color: white;
+    height: 38px;
+    width: 97px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 6px;
+  }
+  
+  .add-game-btn:hover {
+    opacity: 0.8;
+    color: white;
+  }
+  
+  .add-game-btn:active {
+    padding-top: 9px;
+    background: url('https://i.imgur.com/iFqUcGa.png') no-repeat;
+  }
