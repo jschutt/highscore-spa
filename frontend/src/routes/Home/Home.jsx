@@ -9,7 +9,6 @@ const Home = () => {
         fetch('http://localhost:5000/api/scores/highscores')
         .then(response => response.json())
         .then(scores => {
-          console.log(scores)
           setScores(scores)
         });
     }, [])
