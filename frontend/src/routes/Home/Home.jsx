@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from 'react'
-import GamesList from '../../components/GamesList/GamesList';
+import HighscoreList from '../../components/HighscoreList/HighscoreList';
 
 const Home = () => {
 
-    const [games, setGames] = useState([]);
+    const [scores, setScores] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/games')
+        fetch('http://localhost:5000/api/scores/highscores')
         .then(response => response.json())
-        .then(games => setGames(games));
+        .then(scores => {
+          console.log(scores)
+          setScores(scores)
+        });
     }, [])
 
   return (
     <>
-        <GamesList games={games}/>
+        <HighscoreList scores={scores}/>
     </>
   )
 }

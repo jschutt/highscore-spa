@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET http://localhost:3000/ */
 router.get("/", async function (req, res) {
+  
   const db = req.app.locals.db;
 
   const sql = `
