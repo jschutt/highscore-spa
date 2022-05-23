@@ -13,8 +13,9 @@ const GameDetails = () => {
     fetch(`http://localhost:5000/api/games/${urlSlug}/highscores`)
       .then((response) => response.json())
       .then((scores) => {
-        console.log(scores);
-        setScores(scores);
+        let sortedScores = [...scores].sort((a, b) => b.highscore - a.highscore)
+        setScores(sortedScores);  
+        console.log(sortedScores);  
       });
       fetch(`http://localhost:5000/api/games/${urlSlug}`)
       .then((response) => response.json())

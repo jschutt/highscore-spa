@@ -122,6 +122,7 @@ const getGameScore = async (urlSlug, db) => {
              game.url_slug,
              users.player,
      TO_CHAR (users.highscore, '999 999 999') AS highscore,
+        CAST (highscore AS int),
      TO_CHAR (users.highscore_date, 'YYYY-MM-DD') AS highscore_date
         FROM game
   INNER JOIN users
