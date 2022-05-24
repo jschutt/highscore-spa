@@ -15,10 +15,10 @@ const Home = () => {
   return (
     <>
       <h1>Games</h1>
-      <Link to={"admin/games/new"} className="btn btn-primary">
+      <Link to={"new"} className="btn btn-primary">
         Add game
       </Link>
-      <Link to={"admin/games/new"} className="btn btn-primary">
+      <Link to={"scores/new"} className="btn btn-primary">
         Add score
       </Link>
       <table className="table table-striped">

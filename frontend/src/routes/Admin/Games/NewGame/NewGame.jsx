@@ -1,26 +1,39 @@
 import React, {useState} from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const NewGame = () => {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
+    const [image_url, setImage_url] = useState("");
     const [genre, setGenre] = useState("");
-    const [release, setRelease] = useState("");
+    const [release_date, setRelease_date] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("Works")
 
         const game = {
             title,
             description,
             genre,
-            image,
-            release
+            image_url,
+            release_date
         }
-        
-    }
+
+        console.log(game)
+
+        fetch("http://localhost:5000/api/games", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(game)
+        }).then(resp => {
+            navigate('/admin/games')
+        });
+    };
 
   return (
     <>
@@ -32,6 +45,8 @@ const NewGame = () => {
               name="title"
               className="form-control"
               placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
         </div>
@@ -44,6 +59,8 @@ const NewGame = () => {
             className="form-control"
             id="description"
             rows="3"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
         <div className="row mb-3">
@@ -53,10 +70,17 @@ const NewGame = () => {
               name="imageUrl"
               className="form-control"
               placeholder="Image URL"
+              value={image_url}
+              onChange={(e) => setImage_url(e.target.value)}
             />
           </div>
         </div>
-        <select name="genre" id="genre">
+        <select 
+            name="genre" 
+            id="genre"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+            >
           <option value="puzzle">Puzzle</option>
           <option value="platform">Platform</option>
           <option value="shooter">Shooter</option>
@@ -68,6 +92,8 @@ const NewGame = () => {
               name="releaseDate"
               className="form-control"
               placeholder="Release date"
+              value={release_date}
+              onChange={(e) => setRelease_date(e.target.value)}
             />
           </div>
         </div>

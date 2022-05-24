@@ -3,14 +3,11 @@ var router = express.Router();
 
 // GET /api/games[?title={title}]
 router.get("/", async (req, res) => {
-
-  const {title} = req.query;
+  const { title } = req.query;
 
   const db = req.app.locals.db;
 
-  const games = title 
-  ? await searchGame(title, db)
-  : await getGames(db);
+  const games = title ? await searchGame(title, db) : await getGames(db);
 
   checkResult(games);
 
@@ -19,12 +16,11 @@ router.get("/", async (req, res) => {
 
 // GET /api/games/{urlSlug}
 router.get("/:urlSlug", async (req, res) => {
-
-  const {urlSlug} = req.params;
+  const { urlSlug } = req.params;
 
   const db = req.app.locals.db;
 
-  const game = await getGame(urlSlug, db)
+  const game = await getGame(urlSlug, db);
 
   checkResult(game);
 
@@ -33,16 +29,9 @@ router.get("/:urlSlug", async (req, res) => {
 
 // POST /api/games/{urlSlug}
 router.post("/", async (req, res) => {
-
   const db = req.app.locals.db;
 
-  const {
-    title,
-    genre,
-    description,
-    release_date,
-    image_url
-  } = req.body;
+  const { title, genre, description, release_date, image_url } = req.body;
 
   const game = {
     title,
@@ -50,8 +39,13 @@ router.post("/", async (req, res) => {
     description,
     release_date,
     image_url,
-    url_slug: generateURLSlug(title)
+    url_slug: generateURLSlug(title),
   };
+
+  if(!title || !genre || !description || !image_url || !release_date){
+    res.status(404).send();
+    return;
+  }
 
   game.id = await saveGame(game, db);
 
@@ -62,9 +56,8 @@ router.post("/", async (req, res) => {
 
 // GET /api/games/{urlSlug}/highscores
 router.get("/:urlSlug/highscores", async (req, res) => {
+  const { urlSlug } = req.params;
 
-  const {urlSlug} = req.params;
-  
   const db = req.app.locals.db;
 
   const scores = await getGameScore(urlSlug, db);
@@ -79,9 +72,9 @@ const checkResult = (result) => {
     res.status(404).send([]);
     return;
   }
-}
+};
 
-const generateURLSlug = (title) => {
+function generateURLSlug(title) {
   return title.replace("-", "").replace(" ", "-").toLowerCase();
 }
 
@@ -98,11 +91,10 @@ const searchGame = async (title, db) => {
        WHERE title ILIKE '%' || $1 || '%'
   `;
 
-  const result = await db.query(sql, [title])
+  const result = await db.query(sql, [title]);
 
   return result.rows;
-
-}
+};
 
 const getGames = async (db) => {
   const sql = `
@@ -116,13 +108,12 @@ const getGames = async (db) => {
       FROM game
   `;
 
-  const result = await db.query(sql)
+  const result = await db.query(sql);
 
   return result.rows;
-}
+};
 
 const getGame = async (urlSlug, db) => {
-
   const sql = `
       SELECT game.id,
              game.title,
@@ -135,13 +126,11 @@ const getGame = async (urlSlug, db) => {
        WHERE game.url_slug = $1
   `;
 
-  const result = await db.query(sql, [urlSlug])
+  const result = await db.query(sql, [urlSlug]);
   return result.rows;
-
-}
+};
 
 const getGameScore = async (urlSlug, db) => {
-  
   const sql = `
       SELECT game.title,
              game.url_slug,
@@ -153,15 +142,13 @@ const getGameScore = async (urlSlug, db) => {
   INNER JOIN users
           ON users.game_id = game.id
        WHERE game.url_slug = $1
-  `
+  `;
 
-  const result = await db.query(sql, [urlSlug])
+  const result = await db.query(sql, [urlSlug]);
   return result.rows;
-
-}
+};
 
 const saveGame = async (game, db) => {
-  
   const sql = `
     INSERT INTO game (
                 title,
@@ -180,11 +167,10 @@ const saveGame = async (game, db) => {
     game.description,
     game.release_date,
     game.image_url,
-    game.url_slug
+    game.url_slug,
   ]);
 
   return result.rows[0].id;
+};
 
-}
- 
 module.exports = router;
