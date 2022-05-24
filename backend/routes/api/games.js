@@ -54,6 +54,18 @@ router.post("/", async (req, res) => {
   res.status(201).send(game);
 });
 
+// DELETE /api/games/{urlSlug}
+router.delete("/:id", async (req, res) => {
+
+  const db = req.app.locals.db;
+
+  const gameId = req.params.id;
+
+  await deleteGame(gameId, db);
+
+  res.status(204).send();
+});
+
 // GET /api/games/{urlSlug}/highscores
 router.get("/:urlSlug/highscores", async (req, res) => {
   const { urlSlug } = req.params;
@@ -74,7 +86,7 @@ const checkResult = (result) => {
   }
 };
 
-function generateURLSlug(title) {
+const generateURLSlug = (title) => {
   return title.replace("-", "").replace(" ", "-").toLowerCase();
 }
 
@@ -172,5 +184,14 @@ const saveGame = async (game, db) => {
 
   return result.rows[0].id;
 };
+
+const deleteGame = async (gameId, db) => {
+  const sql = `
+    DELETE FROM game
+      WHERE id = $1
+  `;
+
+  await db.query(sql, [gameId])
+}
 
 module.exports = router;
