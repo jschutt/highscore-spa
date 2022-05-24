@@ -34,9 +34,30 @@ router.get("/:urlSlug", async (req, res) => {
 // POST /api/games/{urlSlug}
 router.post("/", async (req, res) => {
 
+  const db = req.app.locals.db;
 
+  const {
+    title,
+    genre,
+    description,
+    release_date,
+    image_url
+  } = req.body;
 
-  res.json([]);
+  const game = {
+    title,
+    genre,
+    description,
+    release_date,
+    image_url,
+    url_slug: generateURLSlug(title)
+  };
+
+  game.id = await saveGame(game, db);
+
+  res.location(`/api/games/${game.url_slug}`);
+
+  res.status(201).send(game);
 });
 
 // GET /api/games/{urlSlug}/highscores
@@ -58,6 +79,10 @@ const checkResult = (result) => {
     res.status(404).send([]);
     return;
   }
+}
+
+const generateURLSlug = (title) => {
+  return title.replace("-", "").replace(" ", "-").toLowerCase();
 }
 
 const searchGame = async (title, db) => {
@@ -85,7 +110,7 @@ const getGames = async (db) => {
            title,
            genre,
            description,
-           TO_CHAR (game.release_date, 'YYYY') AS release_date,
+           TO_CHAR (game.release_date, 'DD-MM-YYYY') AS release_date,
            image_url,
            url_slug
       FROM game
@@ -135,4 +160,31 @@ const getGameScore = async (urlSlug, db) => {
 
 }
 
+const saveGame = async (game, db) => {
+  
+  const sql = `
+    INSERT INTO game (
+                title,
+                genre,
+                description,
+                release_date,
+                image_url,
+                url_slug
+       ) VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id
+  `;
+
+  const result = await db.query(sql, [
+    game.title,
+    game.genre,
+    game.description,
+    game.release_date,
+    game.image_url,
+    game.url_slug
+  ]);
+
+  return result.rows[0].id;
+
+}
+ 
 module.exports = router;
