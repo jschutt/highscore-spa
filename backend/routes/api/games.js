@@ -79,6 +79,78 @@ router.get("/:urlSlug/highscores", async (req, res) => {
   res.json(scores);
 });
 
+// PUT /api/games/{urlSlug}
+router.put("/:id", async (req, res) => {
+
+  const db = req.app.locals.db;
+
+  const {id} = req.params;
+
+  const gameId = await findGameById(id, db)
+
+  if (!gameId) {
+    res.status(404).send();
+    return;
+  }
+
+  const {
+    title,
+    genre,
+    description,
+    release_date,
+    image_url
+  } = req.body;
+
+  const game = {
+    title,
+    genre,
+    description,
+    release_date,
+    image_url,
+    url_slug: await generateURLSlug(title)
+  }
+
+  await updateGame(game, id, db)
+
+  res.status(204).send();
+})
+
+const findGameById = async (id, db) => {
+  const sql = `
+      SELECT game.id
+      FROM game
+      WHERE game.id = $1
+  `;
+
+  const result = await db.query(sql, [id])
+  return result.rows[0];
+}
+
+const updateGame = async (game, id, db) => {
+
+  const sql = `
+      UPDATE game
+         SET title = $2,
+             genre = $3,
+             description = $4,
+             release_date = $5,
+             image_url = $6,
+             url_slug = $7
+       WHERE game.id = $1
+  `;
+
+  await db.query(sql, [
+      id,
+      game.title,
+      game.genre,
+      game.description,
+      game.release_date,
+      game.image_url,
+      game.url_slug
+  ])
+
+}
+
 const checkResult = (result) => {
   if (!result) {
     res.status(404).send([]);
