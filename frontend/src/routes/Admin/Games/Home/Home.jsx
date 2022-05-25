@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -11,6 +12,17 @@ const Home = () => {
         setGames(games);
       });
   }, []);
+
+  const deleteGame = (id) => {
+    fetch(`http://localhost:5000/api/games/${id}`, {
+      method: "DELETE"
+    })
+    .then(response => {
+      const filteredGames = games.filter(x => x.id != id)
+      console.log(filteredGames)
+      setGames(filteredGames);
+    })
+  }
 
   return (
     <>
@@ -38,7 +50,7 @@ const Home = () => {
               <th>{game.genre}</th>
               <th>{game.release_date}</th>
               <th>
-                <button>Delete</button>
+                <button onClick={() => deleteGame(game.id)}>Delete</button>
               </th>
             </tr>
           ))}

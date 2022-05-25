@@ -39,7 +39,7 @@ const NewScore = () => {
             },
             body: JSON.stringify(score)
         }).then(resp => {
-            // navigate('/admin/games')
+            navigate('/admin/games')
         });
     };
 
