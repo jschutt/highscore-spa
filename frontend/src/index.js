@@ -12,6 +12,7 @@ import Admin from "./routes/Admin/Admin";
 import { default as AdminHome } from "./routes/Admin/Home/Home";
 import { default as AdminGames } from "./routes/Admin/Games/Home/Home";
 import { default as AdminNewGame } from "./routes/Admin/Games/NewGame/NewGame";
+import {default as AdminNewScore} from './routes/Admin/Scores/NewScore/NewScore';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -22,6 +23,7 @@ root.render(
         <Route index element={<AdminHome />} />
         <Route path="games" element={<AdminGames />} />
         <Route path="games/new" element={<AdminNewGame />} />
+        <Route path="scores/new" element={<AdminNewScore />} />
       </Route>
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />

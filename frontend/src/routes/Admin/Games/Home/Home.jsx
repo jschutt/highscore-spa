@@ -18,7 +18,7 @@ const Home = () => {
       <Link to={"new"} className="btn btn-primary">
         Add game
       </Link>
-      <Link to={"scores/new"} className="btn btn-primary">
+      <Link to={"../scores/new"} className="btn btn-primary">
         Add score
       </Link>
       <table className="table table-striped">

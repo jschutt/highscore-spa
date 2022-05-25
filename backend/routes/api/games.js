@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
   };
 
   if(!title || !genre || !description || !image_url || !release_date){
-    res.status(404).send();
+    res.status(400).send();
     return;
   }
 
