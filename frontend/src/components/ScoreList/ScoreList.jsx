@@ -6,14 +6,17 @@ import ScoreCard from "./ScoreCard";
 const ScoreList = ({ scores }) => {
 
   const topTenScores = scores.slice(0, 10);
+  console.log(topTenScores)
 
   let rank = 1;
 
   return (
     <div className="score-list">
-      {topTenScores.map((score, i) => (
+      {topTenScores.length !== 0 ? topTenScores.map((score, i) => (
         <ScoreCard score={score} rank={rank++} key={i} />
-        ))}
+        )) 
+        :
+        (<p className="text-center">No scores yet registered</p>)}
     </div>
   );
 };

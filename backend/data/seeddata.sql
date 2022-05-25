@@ -33,8 +33,8 @@ INSERT INTO game (
   'pac-man'
 );
 
--- Add user
-INSERT INTO users (
+-- Add score
+INSERT INTO scores (
   player,
   highscore,
   highscore_date,
@@ -47,7 +47,7 @@ INSERT INTO users (
   1
 );
 
-INSERT INTO users (
+INSERT INTO scores (
   player,
   highscore,
   highscore_date,

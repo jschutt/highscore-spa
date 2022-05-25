@@ -79,7 +79,7 @@ router.get("/:urlSlug/highscores", async (req, res) => {
   res.json(scores);
 });
 
-// PUT /api/games/{urlSlug}
+// PUT /api/games/{id}
 router.put("/:id", async (req, res) => {
 
   const db = req.app.locals.db;
@@ -218,13 +218,13 @@ const getGameScore = async (urlSlug, db) => {
   const sql = `
       SELECT game.title,
              game.url_slug,
-             users.player,
-     TO_CHAR (users.highscore, '999 999 999') AS highscore,
+             scores.player,
+     TO_CHAR (scores.highscore, '999 999 999') AS highscore,
         CAST (highscore AS int),
-     TO_CHAR (users.highscore_date, 'YYYY-MM-DD') AS highscore_date
+     TO_CHAR (scores.highscore_date, 'YYYY-MM-DD') AS highscore_date
         FROM game
-  INNER JOIN users
-          ON users.game_id = game.id
+  INNER JOIN scores
+          ON scores.game_id = game.id
        WHERE game.url_slug = $1
   `;
 

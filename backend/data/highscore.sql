@@ -11,7 +11,7 @@ CREATE TABLE game (
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE users (
+CREATE TABLE scores (
 	id INTEGER GENERATED ALWAYS AS IDENTITY,
 	player VARCHAR(50) NOT NULL,
     highscore INTEGER NOT NULL,
@@ -21,3 +21,14 @@ CREATE TABLE users (
        REFERENCES game (id),
 	   PRIMARY KEY (id)
 );
+
+CREATE TABLE user_role (
+	user_id INTEGER,
+	role_id INTEGER,
+	PRIMARY KEY (user_id, role_id),
+	FOREIGN KEY (user_id)
+		REFERENCES "user" (id),
+		ON DELETE CASCADE,
+	FOREIGN KEY (role_id)
+		REFERENCES role (id)
+)

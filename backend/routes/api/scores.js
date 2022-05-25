@@ -65,14 +65,14 @@ const getHighscores = async (db) => {
     SELECT DISTINCT ON (game.title) 
                        game.title,
                        game.url_slug,
-                       users.player,
-               TO_CHAR (users.highscore, '999 999 999') AS highscore,
+                       scores.player,
+               TO_CHAR (scores.highscore, '999 999 999') AS highscore,
                   CAST (highscore AS int),
-               TO_CHAR (users.highscore_date, 'YYYY-MM-DD') AS highscore_date
+               TO_CHAR (scores.highscore_date, 'YYYY-MM-DD') AS highscore_date
                   FROM game
-             LEFT JOIN users
-                    ON users.game_id = game.id
-              ORDER BY game.title, users.highscore DESC;
+             LEFT JOIN scores
+                    ON scores.game_id = game.id
+              ORDER BY game.title, scores.highscore DESC;
   `
 
   const result = await db.query(sql)
@@ -95,7 +95,7 @@ const findGameId = async (title, db) => {
 const addScore = async (score, db) => {
 
   const sql = `
-      INSERT INTO users (
+      INSERT INTO scores (
         player,
         highscore,
         highscore_date,
