@@ -60,6 +60,47 @@ INSERT INTO scores (
   2
 );
 
+-- Add user
+INSERT INTO "user" (
+	username,
+	password,
+	email,
+	first_name,
+	last_name
+) VALUES (
+	'tony@stark.com',
+	'Secret#123',
+	'tony@stark.com',
+	'Tony',
+	'Stark'
+)
+
+INSERT INTO "user" (
+	username,
+	password,
+	email,
+	first_name,
+	last_name
+) VALUES (
+	'peter@parker.com',
+	'Secret#123',
+	'peter@parker.com',
+	'Peter',
+	'Parker'
+)
+
+-- Add roles
+INSERT INTO role (name)
+VALUES ('Administrator')
+
+INSERT INTO role (name)
+VALUES ('User')
+
+-- Assign role to user (specifically Tony Stark to Administrator)
+INSERT INTO user_role (user_id, role_id)
+VALUES 
+(1, 1)
+
 -- Select all scores for a game
     SELECT users.id,
            users.player,

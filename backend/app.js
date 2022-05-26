@@ -14,9 +14,9 @@ var gamesAdminRouter = require('./routes/admin/games');
 var scoreAdminRouter = require('./routes/admin/score');
 
 //API
-var gamesApiRouter = require('./routes/api/games')
-var scoresApiRouter = require('./routes/api/scores')
-// var highscoresApiRouter = require('./routes/api/scores/highscores')
+var gamesApiRouter = require('./routes/api/games');
+var scoresApiRouter = require('./routes/api/scores');
+var authApiRouter = require('./routes/api/auth');
 
 var app = express();
 
@@ -50,6 +50,7 @@ app.use('/admin/score', scoreAdminRouter);
 // API
 app.use('/api/games', gamesApiRouter);
 app.use('/api/scores', scoresApiRouter);
+app.use('/api/auth', authApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

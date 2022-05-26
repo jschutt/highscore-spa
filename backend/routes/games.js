@@ -15,14 +15,14 @@ router.get("/:urlSlug", async function (req, res) {
      TO_CHAR (game.release_date, 'YYYY') AS release_date,
              game.image_url,
              game.url_slug,
-             users.player,
-     TO_CHAR (users.highscore, '9 999 999 999') AS highscore,
-     TO_CHAR (users.highscore_date, 'DD-MM-YYYY') AS highscore_date
+             scores.player,
+     TO_CHAR (scores.highscore, '9 999 999 999') AS highscore,
+     TO_CHAR (scores.highscore_date, 'DD-MM-YYYY') AS highscore_date
         FROM game
-   LEFT JOIN users
-          ON game.id = users.game_id
+   LEFT JOIN scores
+          ON game.id = scores.game_id
        WHERE game.url_slug = $1
-    ORDER BY users.highscore DESC
+    ORDER BY scores.highscore DESC
        LIMIT 10;
   `;
 

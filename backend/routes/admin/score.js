@@ -66,7 +66,7 @@ const findGameId = async (title, db) => {
 
 const addScore = async (score, db) => {
   const sql = `
-    INSERT INTO users (
+    INSERT INTO scores (
       player,
       highscore,
       highscore_date,

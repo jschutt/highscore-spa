@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import '../../stylesheets/style.css'
 
 const SiteHeader = () => {
@@ -7,7 +8,7 @@ const SiteHeader = () => {
     <nav
       className="navbar navbar-light flex-column justify-content-center"
     >
-      <a className="navbar-brand" href="/">
+      <Link to="/" className="navbar-brand">
         <div className="logo-container">
           <img
             className="image-title my-4"
@@ -55,7 +56,7 @@ const SiteHeader = () => {
             alt="Letter E"
           />
         </div>
-      </a>
+      </Link>
       <form action="/search" className="d-flex justify-content-center mb-4">
         <input
           className="search-bar form-control mr-sm-2"

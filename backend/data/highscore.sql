@@ -22,12 +22,31 @@ CREATE TABLE scores (
 	   PRIMARY KEY (id)
 );
 
+CREATE TABLE "user" (
+	id INTEGER GENERATED ALWAYS AS IDENTITY,
+	username VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (username),
+	UNIQUE (email)
+)
+
+CREATE TABLE role (
+	id INTEGER GENERATED ALWAYS AS IDENTITY,
+	name VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (name)
+)
+
 CREATE TABLE user_role (
 	user_id INTEGER,
 	role_id INTEGER,
 	PRIMARY KEY (user_id, role_id),
 	FOREIGN KEY (user_id)
-		REFERENCES "user" (id),
+		REFERENCES "user" (id)
 		ON DELETE CASCADE,
 	FOREIGN KEY (role_id)
 		REFERENCES role (id)
