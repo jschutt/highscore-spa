@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var authorize = require("../../middleware/authorize");
 
 // GET /api/games[?title={title}]
 router.get("/", async (req, res) => {
@@ -33,6 +34,11 @@ router.post("/", async (req, res) => {
 
   const { title, genre, description, release_date, image_url } = req.body;
 
+  if (!title || !genre || !description || !image_url || !release_date) {
+    res.status(400).send();
+    return;
+  }
+
   const game = {
     title,
     genre,
@@ -41,11 +47,6 @@ router.post("/", async (req, res) => {
     image_url,
     url_slug: generateURLSlug(title),
   };
-
-  if(!title || !genre || !description || !image_url || !release_date){
-    res.status(400).send();
-    return;
-  }
 
   game.id = await saveGame(game, db);
 
@@ -56,7 +57,6 @@ router.post("/", async (req, res) => {
 
 // DELETE /api/games/{urlSlug}
 router.delete("/:id", async (req, res) => {
-
   const db = req.app.locals.db;
 
   const gameId = req.params.id;
@@ -81,25 +81,18 @@ router.get("/:urlSlug/highscores", async (req, res) => {
 
 // PUT /api/games/{id}
 router.put("/:id", async (req, res) => {
-
   const db = req.app.locals.db;
 
-  const {id} = req.params;
+  const { id } = req.params;
 
-  const gameId = await findGameById(id, db)
+  const gameId = await findGameById(id, db);
 
   if (!gameId) {
     res.status(404).send();
     return;
   }
 
-  const {
-    title,
-    genre,
-    description,
-    release_date,
-    image_url
-  } = req.body;
+  const { title, genre, description, release_date, image_url } = req.body;
 
   const game = {
     title,
@@ -107,13 +100,13 @@ router.put("/:id", async (req, res) => {
     description,
     release_date,
     image_url,
-    url_slug: await generateURLSlug(title)
-  }
+    url_slug: await generateURLSlug(title),
+  };
 
-  await updateGame(game, id, db)
+  await updateGame(game, id, db);
 
   res.status(204).send();
-})
+});
 
 const findGameById = async (id, db) => {
   const sql = `
@@ -122,12 +115,11 @@ const findGameById = async (id, db) => {
       WHERE game.id = $1
   `;
 
-  const result = await db.query(sql, [id])
+  const result = await db.query(sql, [id]);
   return result.rows[0];
-}
+};
 
 const updateGame = async (game, id, db) => {
-
   const sql = `
       UPDATE game
          SET title = $2,
@@ -140,16 +132,15 @@ const updateGame = async (game, id, db) => {
   `;
 
   await db.query(sql, [
-      id,
-      game.title,
-      game.genre,
-      game.description,
-      game.release_date,
-      game.image_url,
-      game.url_slug
-  ])
-
-}
+    id,
+    game.title,
+    game.genre,
+    game.description,
+    game.release_date,
+    game.image_url,
+    game.url_slug,
+  ]);
+};
 
 const checkResult = (result) => {
   if (!result) {
@@ -160,7 +151,7 @@ const checkResult = (result) => {
 
 const generateURLSlug = (title) => {
   return title.replace("-", "").replace(" ", "-").toLowerCase();
-}
+};
 
 const searchGame = async (title, db) => {
   const sql = `
@@ -263,7 +254,7 @@ const deleteGame = async (gameId, db) => {
       WHERE id = $1
   `;
 
-  await db.query(sql, [gameId])
-}
+  await db.query(sql, [gameId]);
+};
 
 module.exports = router;

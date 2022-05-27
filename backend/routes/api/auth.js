@@ -15,7 +15,9 @@ router.post("/", async (req, res) => {
 
     user.roles = await getRoles(user.id, db);
 
-    res.json([])
+    const token = await generateToken(user);
+
+    res.json({token})
 });
 
 const findUser = async (username, password, db) => {
@@ -54,5 +56,21 @@ const getRoles = async (id, db) => {
     return result.rows;
 
 };
+
+const generateToken = async (user) => {
+
+    const claims = {
+        fname: user.first_name,
+        lname: user.last_name,
+        email: user.email,
+        roles: user.roles.map(role => role.name)
+    }
+
+    const token = jwt.sign(claims, 'GREEN', {
+        expiresIn: '1h'
+    })
+
+    return token;
+}
 
 module.exports = router;
