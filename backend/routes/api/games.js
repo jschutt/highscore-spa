@@ -3,6 +3,29 @@ var router = express.Router();
 var authorize = require("../../middleware/authorize");
 
 // GET /api/games[?title={title}]
+/**
+ *  @swagger
+ *  /api/games:
+ *    get:
+ *      description: Get all games
+ *      tags: [Game]
+ *      parameters:
+ *        - title: title
+ *          in: query
+ *          description: Game title
+ *          required: false
+ *      responses:
+ *        200:
+ *          description: Returns list of games
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Game'
+ *        404:
+ *          description: Couldn't fetch games
+ */
 router.get("/", async (req, res) => {
   const { title } = req.query;
 
@@ -15,13 +38,36 @@ router.get("/", async (req, res) => {
   res.json(games);
 });
 
-// GET /api/games/{urlSlug}
-router.get("/:urlSlug", async (req, res) => {
-  const { urlSlug } = req.params;
+// GET /api/games/{id}
+/**
+ *  @swagger
+ *  /api/games/{id}:
+ *    get:
+ *      description: Get game
+ *      tags: [Game]
+ *      parameters:
+ *        - title: title
+ *          in: path
+ *          description: Game title
+ *          required: true
+ *      responses:
+ *        200:
+ *          description: Returns game
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Game'
+ *        404:
+ *          description: Game not found
+ */
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
 
   const db = req.app.locals.db;
 
-  const game = await getGame(urlSlug, db);
+  const game = await getGame(id, db);
 
   checkResult(game);
 
@@ -188,7 +234,7 @@ const getGames = async (db) => {
   return result.rows;
 };
 
-const getGame = async (urlSlug, db) => {
+const getGame = async (id, db) => {
   const sql = `
       SELECT game.id,
              game.title,
@@ -198,10 +244,10 @@ const getGame = async (urlSlug, db) => {
              game.image_url,
              game.url_slug
         FROM game
-       WHERE game.url_slug = $1
+       WHERE game.id = $1
   `;
 
-  const result = await db.query(sql, [urlSlug]);
+  const result = await db.query(sql, [id]);
   return result.rows;
 };
 
@@ -256,5 +302,35 @@ const deleteGame = async (gameId, db) => {
 
   await db.query(sql, [gameId]);
 };
+
+/**
+ *  @swagger
+ *  components:
+ *    schemas:
+ *      Game:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: integer
+ *            description: Game id
+ *          title:
+ *            type: string
+ *            description: Game title
+ *          genre:
+ *            type: string
+ *            description: Game genre
+ *          description:
+ *            type: string
+ *            description: Game description
+ *          imageUrl:
+ *            type: string
+ *            description: Game image
+ *          releaseDate:
+ *            type: string
+ *            description: Game release date
+ *          urlSlug:
+ *            type: string
+ *            description: Game URL slug
+ */
 
 module.exports = router;

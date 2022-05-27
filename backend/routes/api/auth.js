@@ -11,7 +11,10 @@ router.post("/", async (req, res) => {
 
     const user = await findUser(username, password, db);
 
-    !user && res.status(401).send();
+    if(!user) {
+        res.status(401).send();
+        return;
+    }
 
     user.roles = await getRoles(user.id, db);
 
