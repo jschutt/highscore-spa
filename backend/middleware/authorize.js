@@ -22,7 +22,7 @@ function authorize(role) {
       if (!hasRole) {
         res.status(403).send();
         return;
-      } else if (hasRole != 'Administrator') {
+      } else if (hasRole != role) {
         res.status(403).send();
         return;
       }

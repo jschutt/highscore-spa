@@ -28,8 +28,8 @@ router.get("/:urlSlug", async (req, res) => {
   res.json(game);
 });
 
-// POST /api/games/{urlSlug}
-router.post("/", async (req, res) => {
+// POST /api/games/
+router.post("/", authorize('Administrator'), async (req, res) => {
   const db = req.app.locals.db;
 
   const { title, genre, description, release_date, image_url } = req.body;
@@ -55,8 +55,8 @@ router.post("/", async (req, res) => {
   res.status(201).send(game);
 });
 
-// DELETE /api/games/{urlSlug}
-router.delete("/:id", async (req, res) => {
+// DELETE /api/games/{id}
+router.delete("/:id", authorize('Administrator'), async (req, res) => {
   const db = req.app.locals.db;
 
   const gameId = req.params.id;
@@ -80,7 +80,7 @@ router.get("/:urlSlug/highscores", async (req, res) => {
 });
 
 // PUT /api/games/{id}
-router.put("/:id", async (req, res) => {
+router.put("/:id", authorize('Administrator'), async (req, res) => {
   const db = req.app.locals.db;
 
   const { id } = req.params;
