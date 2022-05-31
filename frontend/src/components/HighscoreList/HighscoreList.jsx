@@ -11,8 +11,8 @@ const HighscoreList = ({ scores }) => {
           player={score.player} 
           highscore={score.highscore} 
           title={score.title}
-          highscoreDate={score.highscore_date}
-          urlSlug={score.url_slug}
+          highscoreDate={score.highscoreDate}
+          urlSlug={score.urlSlug}
           key={i} />
         ))}
       </div>

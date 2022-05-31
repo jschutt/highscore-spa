@@ -9,16 +9,42 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 
+// const openApiSpecification = swaggerJSDoc({
+//   definition: {
+//     openapi: '3.0.0',
+//     info: {
+//       title: 'Highscore',
+//       version: '1.0.0',
+//     },
+//   },
+//   apis:['./routes/api/*.js']
+// })
+
 const openApiSpecification = swaggerJSDoc({
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Highscore',
-      version: '1.0.0',
+      title: "Highscore",
+      version: "1.0.0",
+      description:
+        "A sample project to understand how easy it is to document and Express API",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          in: "header",
+          bearerFormat: "JWT"
+        },
+      }
+    },
+    security: [{
+      bearerAuth: []
+    }],
   },
-  apis:['./routes/api/*.js']
-})
+  apis: ['./routes/api/*.js']
+});
 
 var indexRouter = require('./routes/index');
 var searchRouter = require('./routes/search');

@@ -7,19 +7,19 @@ const SearchCard = ({game}) => {
     const {
         title,
         genre,
-        release_date,
-        image_url,
-        url_slug
+        releaseDate,
+        imageUrl,
+        urlSlug
     } = game;
 
     console.log(game)
 
   return (
-    <Link to={"/games/" + url_slug}>
+    <Link to={"/games/" + urlSlug}>
       <div className="search-card">
         <p className="search-title">{title}</p>
-        <img className="search-image" src={image_url} alt="Picture of title" />
-        <p className="search-genre">{genre}, {release_date}</p>
+        <img className="search-image" src={imageUrl} alt="Picture of title" />
+        <p className="search-genre">{genre}, {releaseDate}</p>
       </div>
     </Link>
   );

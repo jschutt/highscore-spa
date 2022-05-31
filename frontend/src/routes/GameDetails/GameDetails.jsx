@@ -30,13 +30,13 @@ const GameDetails = () => {
       {game && (
         <section className="game-details row mt-4">
           <img
-            src={game.image_url}
+            src={game.imageUrl}
             className="d-block col-4"
             alt={"Picture of " + game.title}
           />
           <div className="col-8">
             <h1 className="mb-3">{game.title}</h1>
-            <div className="mb-3">{game.release_date}, {game.genre}</div>
+            <div className="mb-3">{game.releaseDate}, {game.genre}</div>
             <div className="mb-3">{game.description}</div>
           </div>
           <div className="score-list-container mt-4 pb-3">

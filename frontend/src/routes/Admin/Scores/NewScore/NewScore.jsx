@@ -6,7 +6,7 @@ const NewScore = () => {
     const [games, setGames] = useState([]);
     const [title, setTitle] = useState("");
     const [player, setPlayer] = useState("");
-    const [highscore_date, setHighscore_date] = useState("");
+    const [highscoreDate, setHighscoreDate] = useState("");
     const [highscore, setHighscore] = useState(0);
 
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ const NewScore = () => {
         const score = {
             title,
             player,
-            highscore_date,
+            highscoreDate,
             highscore
         }
 
@@ -77,7 +77,7 @@ const NewScore = () => {
               id="highscoreDate"
               className="form-control"
               placeholder="YYYY-MM-DD"
-              onChange={(e) => setHighscore_date(e.target.value)}
+              onChange={(e) => setHighscoreDate(e.target.value)}
             />
           </div>
         </div>

@@ -5,9 +5,9 @@ const NewGame = () => {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [image_url, setImage_url] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const [genre, setGenre] = useState("");
-    const [release_date, setRelease_date] = useState("");
+    const [releaseDate, setReleaseDate] = useState("");
 
     const navigate = useNavigate();
 
@@ -18,8 +18,8 @@ const NewGame = () => {
             title,
             description,
             genre,
-            image_url,
-            release_date
+            imageUrl,
+            releaseDate
         }
 
         console.log(game)
@@ -70,8 +70,8 @@ const NewGame = () => {
               name="imageUrl"
               className="form-control"
               placeholder="Image URL"
-              value={image_url}
-              onChange={(e) => setImage_url(e.target.value)}
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
             />
           </div>
         </div>
@@ -92,8 +92,8 @@ const NewGame = () => {
               name="releaseDate"
               className="form-control"
               placeholder="Release date"
-              value={release_date}
-              onChange={(e) => setRelease_date(e.target.value)}
+              value={releaseDate}
+              onChange={(e) => setReleaseDate(e.target.value)}
             />
           </div>
         </div>

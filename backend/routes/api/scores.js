@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 
 // POST /api/scores
 router.post("/", authorize('Administrator'), async (req, res) => {
-  const { title, player, highscore, highscore_date } = req.body;
+  const { title, player, highscore, highscoreDate } = req.body;
 
   const db = req.app.locals.db;
 
@@ -27,11 +27,11 @@ router.post("/", authorize('Administrator'), async (req, res) => {
   const score = {
     player,
     highscore: +highscore,
-    highscore_date,
-    game_id: gameId,
+    highscoreDate,
+    gameId: gameId,
   };
 
-  if (!title || !highscore || !highscore_date || !gameId) {
+  if (!title || !highscore || !highscoreDate || !gameId) {
     res.status(400).send();
     return;
   }
@@ -72,7 +72,15 @@ const getHighscores = async (db) => {
 
   const result = await db.query(sql);
 
-  return result.rows;
+  const scores = result.rows.map((score) => ({
+    title: score.title,
+    urlSlug: score.url_slug,
+    player: score.player,
+    highscore: score.highscore,
+    highscoreDate: score.highscore_date
+  }))
+
+  return scores;
 };
 
 const findGameId = async (title, db) => {
@@ -99,8 +107,8 @@ const addScore = async (score, db) => {
   await db.query(sql, [
     score.player,
     score.highscore,
-    score.highscore_date,
-    score.game_id,
+    score.highscoreDate,
+    score.gameId,
   ]);
 };
 

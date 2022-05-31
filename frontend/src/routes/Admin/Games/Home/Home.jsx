@@ -48,7 +48,7 @@ const Home = () => {
               <th>{game.id}</th>
               <th>{game.title}</th>
               <th>{game.genre}</th>
-              <th>{game.release_date}</th>
+              <th>{game.releaseDate}</th>
               <th>
                 <button onClick={() => deleteGame(game.id)}>Delete</button>
               </th>
