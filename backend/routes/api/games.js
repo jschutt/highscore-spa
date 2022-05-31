@@ -140,6 +140,26 @@ router.post("/", authorize("Administrator"), async (req, res) => {
 });
 
 // DELETE /api/games/{id}
+/**
+ *  @swagger
+ *  /api/games/{id}:
+ *    delete:
+ *      summary: Delete game
+ *      description: Delete game
+ *      tags: [Game]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          description: Game id
+ *          required: true
+ *      responses:
+ *        204:
+ *          description: Game deleted
+ *        401:
+ *          description: Not logged in
+ *        403:
+ *          description: Not allowed
+ */
 router.delete("/:id", authorize("Administrator"), async (req, res) => {
   const db = req.app.locals.db;
 
@@ -151,6 +171,30 @@ router.delete("/:id", authorize("Administrator"), async (req, res) => {
 });
 
 // GET /api/games/{urlSlug}/highscores
+/**
+ *  @swagger
+ *  /api/games/{urlSlug}/highscores:
+ *    get:
+ *      summary: Get all highscores for game
+ *      description: Get all highscores for game
+ *      tags: [Game]
+ *      parameters:
+ *        - name: urlSlug
+ *          in: path
+ *          description: Game URL slug
+ *          required: true
+ *      responses:
+ *        200:
+ *          description: Returns highscores
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Highscores'
+ *        404:
+ *          description: Highscores not found
+ */
 router.get("/:urlSlug/highscores", async (req, res) => {
   const { urlSlug } = req.params;
 
@@ -164,6 +208,36 @@ router.get("/:urlSlug/highscores", async (req, res) => {
 });
 
 // PUT /api/games/{id}
+/**
+ *  @swagger
+ *  /api/games/{id}:
+ *    put:
+ *      summary: Update game
+ *      description: Update game
+ *      tags: [Game]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          description: Game id
+ *          required: true
+ *      consumes:
+ *        - application/json
+ *      requestBody:
+ *        description: Game details
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              $ref: '#/components/schemas/NewGame'
+ *      produces:
+ *        - application/json
+ *      responses:
+ *        204:
+ *          description: Game updated
+ *        404:
+ *          description: Game not found
+ */
 router.put("/:id", authorize("Administrator"), async (req, res) => {
   const db = req.app.locals.db;
 
@@ -427,6 +501,24 @@ const deleteGame = async (gameId, db) => {
  *          releaseDate:
  *            type: string
  *            description: Game release date
+ *      Highscores:
+ *        type: object
+ *        properties:
+ *          title:
+ *            type: string
+ *            description: Game title
+ *          urlSlug:
+ *            type: string
+ *            description: Game URL slug
+ *          player:
+ *            type: string
+ *            description: Player
+ *          highscore:
+ *            type: integer
+ *            description: Player highscore
+ *          highscoreDate:
+ *            type: string
+ *            description: Highscore date
  */
 
 module.exports = router;

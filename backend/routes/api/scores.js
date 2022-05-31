@@ -2,21 +2,41 @@ var express = require("express");
 var router = express.Router();
 var authorize = require("../../middleware/authorize");
 
-// GET /api/scores
-// TODO: Fix this router, or remove it
-router.get("/", async (req, res) => {
-  // const {title} = req.query;
-
-  // const db = req.app.locals.db;
-
-  //   const games = title
-  //   ? await searchGame(title, db)
-  //   : await getGames(db);
-
-  res.json([]);
-});
-
 // POST /api/scores
+/**
+ *  @swagger
+ *  /api/scores:
+ *    post:
+ *      summary: Add new score
+ *      description: Add new score
+ *      tags: [Score]
+ *      consumes:
+ *        - application/json
+ *      requestBody:
+ *        description: Score details
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              $ref: '#/components/schemas/NewScore'
+ *      produces:
+ *        - application/json
+ *      responses:
+ *        201:
+ *          description: Returns score
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                $ref: '#/components/schemas/Score'
+ *        400:
+ *          description: Invalid score
+ *        401:
+ *          description: Invalid token
+ *        403:
+ *          description: Not allowed
+ */
 router.post("/", authorize('Administrator'), async (req, res) => {
   const { title, player, highscore, highscoreDate } = req.body;
 
@@ -25,6 +45,7 @@ router.post("/", authorize('Administrator'), async (req, res) => {
   const gameId = await findGameId(title, db);
 
   const score = {
+    title,
     player,
     highscore: +highscore,
     highscoreDate,
@@ -42,6 +63,25 @@ router.post("/", authorize('Administrator'), async (req, res) => {
 });
 
 // GET /api/scores/highscores
+/**
+ *  @swagger
+ *  /api/scores/highscores:
+ *    get:
+ *      summary: Get top highscores
+ *      description: Get top highscores
+ *      tags: [Score]
+ *      responses:
+ *        200:
+ *          description: Returns highscores
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Score'
+ *        404:
+ *          description: Highscores not found
+ */
 router.get("/highscores", async (req, res) => {
   const db = req.app.locals.db;
 
@@ -111,5 +151,44 @@ const addScore = async (score, db) => {
     score.gameId,
   ]);
 };
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     NewScore:
+ *       type: object
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: Game title
+ *         player:
+ *           type: string
+ *           description: Player
+ *         highscore:
+ *           type: integer
+ *           description: Player highscore
+ *         highscoreDate:
+ *           type: string
+ *           description: Highscore date
+ *     Score:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: Game id
+ *         title:
+ *           type: string
+ *           description: Game title
+ *         player:
+ *           type: string
+ *           description: Player
+ *         highscore:
+ *           type: integer
+ *           description: Player highscore
+ *         highscoreDate:
+ *           type: string
+ *           description: Highscore date
+ */
 
 module.exports = router;
