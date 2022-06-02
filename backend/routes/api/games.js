@@ -78,7 +78,7 @@ router.get("/:urlSlug", async (req, res) => {
   res.json(game);
 });
 
-// POST /api/games/
+// POST /api/games/ - AUTH
 /**
  *  @swagger
  *  /api/games:
@@ -113,7 +113,7 @@ router.get("/:urlSlug", async (req, res) => {
  *        403:
  *          description: Not allowed
  */
-router.post("/", authorize("Administrator"), async (req, res) => {
+router.post("/", async (req, res) => {
   const db = req.app.locals.db;
 
   const { title, genre, description, releaseDate, imageUrl } = req.body;
@@ -139,7 +139,7 @@ router.post("/", authorize("Administrator"), async (req, res) => {
   res.status(201).send(game);
 });
 
-// DELETE /api/games/{id}
+// DELETE /api/games/{id} - AUTH
 /**
  *  @swagger
  *  /api/games/{id}:
@@ -160,7 +160,7 @@ router.post("/", authorize("Administrator"), async (req, res) => {
  *        403:
  *          description: Not allowed
  */
-router.delete("/:id", authorize("Administrator"), async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const db = req.app.locals.db;
 
   const gameId = req.params.id;
@@ -207,7 +207,7 @@ router.get("/:urlSlug/highscores", async (req, res) => {
   res.json(scores);
 });
 
-// PUT /api/games/{id}
+// PUT /api/games/{id} - AUTH
 /**
  *  @swagger
  *  /api/games/{id}:
@@ -238,7 +238,7 @@ router.get("/:urlSlug/highscores", async (req, res) => {
  *        404:
  *          description: Game not found
  */
-router.put("/:id", authorize("Administrator"), async (req, res) => {
+router.put("/:id", async (req, res) => {
   const db = req.app.locals.db;
 
   const { id } = req.params;

@@ -11,7 +11,7 @@ function authorize(role) {
       return;
     }
 
-    jwt.verify(token, "GREEN", function (err, claims) {
+    jwt.verify(token, 'GREEN', function (err, claims) {
       if (err) {
         res.status(401).send();
         return;

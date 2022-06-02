@@ -46,6 +46,8 @@ const openApiSpecification = swaggerJSDoc({
   apis: ['./routes/api/*.js']
 });
 
+require('dotenv').config();
+
 var indexRouter = require('./routes/index');
 var searchRouter = require('./routes/search');
 var gamesRouter = require('./routes/games');
