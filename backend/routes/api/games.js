@@ -258,7 +258,7 @@ router.put("/:id", async (req, res) => {
     description,
     releaseDate,
     imageUrl,
-    urlSlug: await generateURLSlug(title),
+    urlSlug: await generateURLSlug(title)
   };
 
   await updateGame(game, id, db);

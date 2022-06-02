@@ -122,8 +122,7 @@ describe("POST /api/games", () => {
         genre: "Puzzle",
         description: "Lorem ipsum dolor",
         releaseDate: "1990-01-01",
-        imageUrl: "https://via.placeholder.com/260x260.png?text=Game",
-        urlSlug: "tetris-extreme",
+        imageUrl: "https://via.placeholder.com/260x260.png?text=Game"
       };
 
       const response = await request(app)
@@ -179,14 +178,14 @@ describe("POST /api/games", () => {
 describe("DELETE /api/games", () => {
 
   describe("when deleting a game", () => {
+
     test("should respond with a 204 status code", async () => {
       const game = {
         title: "TDD Delete Tetris",
         genre: "Puzzle",
         description: "Lorem ipsum dolor",
         releaseDate: "1990-01-01",
-        imageUrl: "https://via.placeholder.com/260x260.png?text=Game",
-        urlSlug: "tetris-extreme",
+        imageUrl: "https://via.placeholder.com/260x260.png?text=Game"
       };
 
       const toBeDeletedGame = await request(app)
@@ -201,3 +200,68 @@ describe("DELETE /api/games", () => {
     });
   });
 });
+
+describe('PUT /api/games', () => {
+
+  describe('when updating a game', () => {
+
+    test('should respond with a 204 status code', async () => {
+
+      // const oldGame = {
+      //   title: "ToBeUpdated",
+      //   genre: "Puzzle",
+      //   description: "Lorem ipsum dolor",
+      //   releaseDate: "1990-01-01",
+      //   imageUrl: "https://via.placeholder.com/260x260.png?text=Game"
+      // };
+
+      // const game = await request(app)
+      //   .post('/api/games')
+      //   .send(oldGame)
+
+      // const response = await request(app)
+      //   .put(`/api/games/${game.body.id}`)
+      //   .send({
+      //     title: "updated",
+      //     genre: "Puzzle",
+      //     description: "Lorem ipsum dolor",
+      //     releaseDate: "1990-01-01",
+      //     imageUrl: "https://via.placeholder.com/260x260.png?text=Game"
+      //   });
+
+      //   expect(response.body.title)
+      //     .toBe("updated");
+      //   expect(response.statusCode)
+      //     .toBe(204)
+
+      //   await request(app)
+      //   .delete(`/api/games/${response.body.id}`);
+
+    })
+
+  })
+
+  describe('when game is not found', () => {
+
+    const badRequest = 0
+
+    test('should respond with a 404 status code', async () => {
+
+      const response = await request(app)
+        .put(`/api/games/${badRequest}`)
+        .send({
+              title: "Error",
+              genre: "Puzzle",
+              description: "Lorem ipsum dolor",
+              releaseDate: "1990-01-01",
+              imageUrl: "https://via.placeholder.com/260x260.png?text=Game"
+            });
+        
+        expect(response.statusCode)
+          .toBe(404);
+
+    })
+
+  })
+
+})
