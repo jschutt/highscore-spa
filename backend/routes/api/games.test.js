@@ -177,6 +177,7 @@ describe("POST /api/games", () => {
 });
 
 describe("DELETE /api/games", () => {
+
   describe("when deleting a game", () => {
     test("should respond with a 204 status code", async () => {
       const game = {
@@ -188,7 +189,9 @@ describe("DELETE /api/games", () => {
         urlSlug: "tetris-extreme",
       };
 
-      const toBeDeletedGame = await request(app).post("/api/games").send(game);
+      const toBeDeletedGame = await request(app)
+        .post("/api/games")
+        .send(game);
 
       const response = await request(app).delete(
         `/api/games/${toBeDeletedGame.body.id}`
