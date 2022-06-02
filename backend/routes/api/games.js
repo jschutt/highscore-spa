@@ -113,7 +113,7 @@ router.get("/:urlSlug", async (req, res) => {
  *        403:
  *          description: Not allowed
  */
-router.post("/", async (req, res) => {
+router.post("/", authorize('Administrator'), async (req, res) => {
   const db = req.app.locals.db;
 
   const { title, genre, description, releaseDate, imageUrl } = req.body;
@@ -160,7 +160,7 @@ router.post("/", async (req, res) => {
  *        403:
  *          description: Not allowed
  */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorize('Administrator'), async (req, res) => {
   const db = req.app.locals.db;
 
   const gameId = req.params.id;
@@ -238,7 +238,7 @@ router.get("/:urlSlug/highscores", async (req, res) => {
  *        404:
  *          description: Game not found
  */
-router.put("/:id", async (req, res) => {
+router.put("/:id", authorize('Administrator'), async (req, res) => {
   const db = req.app.locals.db;
 
   const { id } = req.params;
